@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cyclone Nutrition Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --orange: #f15a24;
+      --black: #050505;
+      --white: #ffffff;
+      --dark: #111111;
+      --gray: #2a2a2a;
+      --green: #3fb950;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #000;
+      color: var(--white);
+      font-family: Arial, sans-serif;
+    }
+
+    .dashboard {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 4px solid var(--orange);
+      padding-bottom: 18px;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      max-width: 360px;
+      width: 55%;
+    }
+
+    h1 {
+      font-family: Impact, Arial Black, sans-serif;
+      color: var(--orange);
+      font-size: 42px;
+      margin: 0;
+      letter-spacing: 1px;
+      text-align: right;
+    }
+
+    .sub {
+      color: #ccc;
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #191919, #0c0c0c);
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .card .label {
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    .card .number {
+      font-family: Impact, Arial Black, sans-serif;
+      font-size: 42px;
+      color: var(--orange);
+      margin-top: 8px;
+    }
+
+    .section-title {
+      font-family: Impact, Arial Black, sans-serif;
+      color: var(--orange);
+      font-size: 28px;
+      margin: 24px 0 12px;
+      letter-spacing: 1px;
+    }
+
+    .shake-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .shake {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .shake span:last-child {
+      color: var(--orange);
+      font-size: 28px;
+      font-family: Impact, Arial Black, sans-serif;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #111;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    th {
+      background: var(--orange);
+      color: #000;
+      text-align: left;
+      padding: 14px;
+      font-weight: 900;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #333;
+      font-size: 15px;
+    }
+
+    tr:nth-child(even) {
+      background: #181818;
+    }
+
+    .status {
+      display: flex;
+      gap: 8px;
+    }
+
+    .status button {
+      border: 1px solid #444;
+      background: #222;
+      color: white;
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .status button.active {
+      background: var(--green);
+      color: #000;
+    }
+
+    .empty {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      color: #ccc;
+      font-size: 20px;
+    }
+
+    @media (max-width: 800px) {
+      .top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .logo {
+        width: 100%;
+      }
+
+      h1, .sub {
+        text-align: left;
+      }
+
+      .cards,
+      .shake-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      th, td {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="dashboard">
+    <div class="top">
+      <img class="logo" src="Cyclone Nutrition.png" alt="Cyclone Nutrition logo" />
+      <div>
+        <h1>FULFILLMENT DASHBOARD</h1>
+        <div class="sub" id="dateLabel"></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="label">Total Orders</div>
+        <div class="number" id="totalOrders">0</div>
+      </div>
+      <div class="card">
+        <div class="label">Before School</div>
+        <div class="number" id="beforeSchool">0</div>
+      </div>
+      <div class="card">
+        <div class="label">2nd Chance</div>
+        <div class="number" id="secondChance">0</div>
+      </div>
+      <div class="card">
+        <div class="label">After School</div>
+        <div class="number" id="afterSchool">0</div>
+      </div>
+    </div>
+
+    <div class="section-title">SHAKE TOTALS</div>
+    <div class="shake-grid">
+      <div class="shake"><span>Chocolate</span><span id="chocolate">0</span></div>
+      <div class="shake"><span>Strawberry</span><span id="strawberry">0</span></div>
+      <div class="shake"><span>Vanilla</span><span id="vanilla">0</span></div>
+      <div class="shake"><span>Flavor of the Week</span><span id="weekly">0</span></div>
+    </div>
+
+    <div class="section-title">FULFILLMENT ORDER</div>
+    <div id="ordersArea"></div>
+  </main>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydZg5IJuBTVGbcw0feOC9jq1WsoxG6-3EF964_rXrAN7_OVyPcv4qWo45qgn4rph9g/exec";
+
+    function operationalDate() {
+      const now = new Date();
+      const reset = new Date();
+      reset.setHours(17, 0, 0, 0);
+
+      if (now >= reset) {
+        now.setDate(now.getDate() + 1);
+      }
+
+      return now.toISOString().split("T")[0];
+    }
+
+    function formatDateLabel() {
+      const date = operationalDate();
+      document.getElementById("dateLabel").innerText =
+        "Showing orders for " + date + " · Dashboard resets after 5:00 PM";
+    }
+
+    function getStatusKey(order, type) {
+      return `${order.date}-${order.name}-${order.grade}-${type}`;
+    }
+
+    function toggleStatus(order, type, button) {
+      const key = getStatusKey(order, type);
+      const current = localStorage.getItem(key) === "true";
+      localStorage.setItem(key, String(!current));
+      button.classList.toggle("active", !current);
+    }
+
+    function loadOrders() {
+      const callbackName = "loadCycloneOrders_" + Date.now();
+
+      window[callbackName] = function(data) {
+        const targetDate = operationalDate();
+
+        const orders = data.orders
+          .filter(order => order.date === targetDate)
+          .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+        renderDashboard(orders);
+        delete window[callbackName];
+      };
+
+      const script = document.createElement("script");
+      script.src = SCRIPT_URL + "?callback=" + callbackName;
+      document.body.appendChild(script);
+    }
+
+    function renderDashboard(orders) {
+      document.getElementById("totalOrders").innerText = orders.length;
+      document.getElementById("beforeSchool").innerText =
+        orders.filter(o => o.pickup === "Before School").length;
+      document.getElementById("secondChance").innerText =
+        orders.filter(o => o.pickup === "2nd Chance Breakfast").length;
+      document.getElementById("afterSchool").innerText =
+        orders.filter(o => o.pickup === "After School").length;
+
+      document.getElementById("chocolate").innerText =
+        orders.filter(o => o.shake === "Chocolate").length;
+      document.getElementById("strawberry").innerText =
+        orders.filter(o => o.shake === "Strawberry").length;
+      document.getElementById("vanilla").innerText =
+        orders.filter(o => o.shake === "Vanilla").length;
+      document.getElementById("weekly").innerText =
+        orders.filter(o => o.shake === "Flavor of the Week").length;
+
+      const area = document.getElementById("ordersArea");
+
+      if (orders.length === 0) {
+        area.innerHTML = `<div class="empty">No orders showing for the current school day.</div>`;
+        return;
+      }
+
+      area.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Submitted</th>
+              <th>Name</th>
+              <th>Grade</th>
+              <th>Pickup</th>
+              <th>Shake</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${orders.map((order, index) => {
+              const submitted = new Date(order.timestamp).toLocaleTimeString([], {
+                hour: "numeric",
+                minute: "2-digit"
+              });
+
+              const prepKey = getStatusKey(order, "prepared");
+              const pickupKey = getStatusKey(order, "pickedup");
+
+              const prepared = localStorage.getItem(prepKey) === "true";
+              const pickedUp = localStorage.getItem(pickupKey) === "true";
+
+              return `
+                <tr>
+                  <td>${submitted}</td>
+                  <td><strong>${order.name}</strong></td>
+                  <td>${order.grade}</td>
+                  <td>${order.pickup}</td>
+                  <td>${order.shake}</td>
+                  <td>
+                    <div class="status">
+                      <button class="${prepared ? "active" : ""}" onclick='toggleStatus(${JSON.stringify(order)}, "prepared", this)'>Prep</button>
+                      <button class="${pickedUp ? "active" : ""}" onclick='toggleStatus(${JSON.stringify(order)}, "pickedup", this)'>Picked Up</button>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    formatDateLabel();
+    loadOrders();
+    setInterval(loadOrders, 30000);
+  </script>
+</body>
+</html>
