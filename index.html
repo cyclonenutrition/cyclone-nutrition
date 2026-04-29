@@ -208,6 +208,66 @@
     <div class="hint">Chocolate / Strawberry / Vanilla / Flavor of the Week</div>
 
     <button onclick="submitOrder()">➤ SUBMIT ORDER</button>
+    async function submitOrder() {
+  const msg = document.getElementById("msg");
+
+  const now = new Date();
+  const cutoffTime = new Date();
+  const [h, m] = cutoff.split(":");
+  cutoffTime.setHours(h, m, 0, 0);
+
+  if (now > cutoffTime) {
+    msg.innerText = "Ordering is closed for today.";
+    return;
+  }
+
+  const name = document.getElementById("name").value.trim();
+  const grade = document.getElementById("grade").value;
+  const pickup = document.getElementById("pickup").value;
+  const shake = document.getElementById("shake").value;
+
+  if (!name || !grade || !pickup || !shake) {
+    msg.innerText = "Please complete all fields.";
+    return;
+  }
+
+  const key = `${getTodayKey()}-${name.toLowerCase()}-${grade}`;
+
+  if (localStorage.getItem(key)) {
+    msg.innerText = "An order has already been submitted for this student today.";
+    return;
+  }
+
+  const order = {
+    name,
+    grade,
+    pickup,
+    shake,
+    date: getTodayKey()
+  };
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain"
+      },
+      body: JSON.stringify(order)
+    });
+
+    localStorage.setItem(key, JSON.stringify(order));
+
+    document.getElementById("name").value = "";
+    document.getElementById("grade").value = "";
+    document.getElementById("pickup").value = "";
+    document.getElementById("shake").value = "";
+
+    msg.innerText = "Order submitted!";
+  } catch (error) {
+    msg.innerText = "Something went wrong. Please try again.";
+  }
+}
 
     <div class="notice">
       🕘 Orders must be submitted by <strong>7:45 AM</strong><br />
@@ -219,6 +279,7 @@
 
   <script>
     const cutoff = "23:59";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydZg5IJuBTVGbcw0feOC9jq1WsoxG6-3EF964_rXrAN7_OVyPcv4qWo45qgn4rph9g/exec";
 
     function getTodayKey() {
       return new Date().toISOString().split("T")[0];
