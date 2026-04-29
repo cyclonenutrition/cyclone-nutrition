@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Cyclone Nutrition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial; background: #000; color: white; padding: 20px; }
+    h1 { color: orange; }
+    button { width: 100%; padding: 15px; margin-top: 10px; border: none; background: orange; color: black; font-weight: bold; border-radius: 10px; }
+    input, select { width: 100%; padding: 12px; margin-top: 10px; border-radius: 10px; border: none; }
+    .card { background: #111; padding: 20px; border-radius: 15px; }
+  </style>
+</head>
+
+<body>
+
+<h1>Cyclone Nutrition</h1>
+
+<div class="card">
+  <h2>Place Order</h2>
+
+  <input id="name" placeholder="Student Name">
+  <input id="grade" placeholder="Grade">
+
+  <select id="pickup">
+    <option>Before School</option>
+    <option>2nd Chance Breakfast</option>
+    <option>After School</option>
+  </select>
+
+  <select id="shake">
+    <option>Chocolate</option>
+    <option>Strawberry</option>
+    <option>Vanilla</option>
+    <option>Flavor of the Week</option>
+  </select>
+
+<button onclick="submitOrder()">Submit Order</button>
+
+  <p id="msg"></p>
+</div>
+
+<script>
+const cutoff = "07:45";
+
+function submitOrder() {
+  const now = new Date();
+  const cutoffTime = new Date();
+  const [h,m] = cutoff.split(":");
+  cutoffTime.setHours(h,m);
+
+  if(now > cutoffTime){
+    document.getElementById("msg").innerText = "Ordering is closed";
+    return;
+  }
+
+  const name = document.getElementById("name").value;
+  const grade = document.getElementById("grade").value;
+
+  const key = name + grade;
+
+  if(localStorage.getItem(key)){
+    document.getElementById("msg").innerText = "Order already submitted today";
+    return;
+  }
+
+  localStorage.setItem(key, "ordered");
+
+  document.getElementById("msg").innerText = "Order submitted!";
+}
+</script>
+
+</body>
+</html>
