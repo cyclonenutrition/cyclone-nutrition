@@ -1,75 +1,277 @@
 <!DOCTYPE html>
-
 <html>
 <head>
   <title>Cyclone Nutrition</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: Arial; background: #000; color: white; padding: 20px; }
-    h1 { color: orange; }
-    button { width: 100%; padding: 15px; margin-top: 10px; border: none; background: orange; color: black; font-weight: bold; border-radius: 10px; }
-    input, select { width: 100%; padding: 12px; margin-top: 10px; border-radius: 10px; border: none; }
-    .card { background: #111; padding: 20px; border-radius: 15px; }
+    :root {
+      --orange: #f15a24;
+      --black: #050505;
+      --white: #ffffff;
+      --gray: #d9d9d9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Impact, Arial Black, Arial, sans-serif;
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .app {
+      max-width: 520px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 24px 18px 36px;
+      background: radial-gradient(circle at top, #171717 0%, #000 65%);
+    }
+
+    .logo {
+      width: 100%;
+      display: block;
+      margin: 0 auto 24px;
+      border-bottom: 3px solid var(--orange);
+      padding-bottom: 20px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 26px 0 22px;
+    }
+
+    .line {
+      flex: 1;
+      height: 3px;
+      background: var(--orange);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      letter-spacing: 1px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .field {
+      display: flex;
+      margin-bottom: 14px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #555;
+      background: white;
+    }
+
+    .icon {
+      width: 62px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    input, select {
+      flex: 1;
+      width: 100%;
+      border: none;
+      padding: 18px;
+      font-size: 22px;
+      font-family: Arial, sans-serif;
+      color: #333;
+      background: #fff;
+      outline: none;
+    }
+
+    select {
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, #000 50%),
+        linear-gradient(135deg, #000 50%, transparent 50%);
+      background-position: calc(100% - 26px) 50%, calc(100% - 18px) 50%;
+      background-size: 8px 8px, 8px 8px;
+      background-repeat: no-repeat;
+    }
+
+    .hint {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #ccc;
+      margin: -6px 0 16px 78px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 20px;
+      border: none;
+      border-radius: 10px;
+      background: var(--orange);
+      color: #000;
+      font-size: 28px;
+      font-family: Impact, Arial Black, Arial, sans-serif;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    .notice {
+      margin-top: 22px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      color: #eee;
+      line-height: 1.5;
+    }
+
+    .notice strong {
+      color: var(--orange);
+      font-size: 22px;
+    }
+
+    #msg {
+      margin-top: 18px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 18px;
+      color: var(--orange);
+    }
+
+    @media (max-width: 420px) {
+      h1 {
+        font-size: 27px;
+      }
+
+      input, select {
+        font-size: 19px;
+      }
+
+      button {
+        font-size: 24px;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <main class="app">
+    <img class="logo" src="cyclone-logo.png" alt="Cyclone Nutrition logo" />
 
-<h1>Cyclone Nutrition</h1>
+    <div class="title-row">
+      <div class="line"></div>
+      <h1>PLACE YOUR ORDER</h1>
+      <div class="line"></div>
+    </div>
 
-<div class="card">
-  <h2>Place Order</h2>
+    <div class="field">
+      <div class="icon">👤</div>
+      <input id="name" placeholder="Student Name" />
+    </div>
 
-  <input id="name" placeholder="Student Name">
-  <input id="grade" placeholder="Grade">
+    <div class="field">
+      <div class="icon">🎓</div>
+      <select id="grade">
+        <option value="">Select Grade</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+    </div>
 
-  <select id="pickup">
-    <option>Before School</option>
-    <option>2nd Chance Breakfast</option>
-    <option>After School</option>
-  </select>
+    <div class="field">
+      <div class="icon">🕘</div>
+      <select id="pickup">
+        <option value="">Select Pickup Time</option>
+        <option>Before School</option>
+        <option>2nd Chance Breakfast</option>
+        <option>After School</option>
+      </select>
+    </div>
+    <div class="hint">Before School / 2nd Chance Breakfast / After School</div>
 
-  <select id="shake">
-    <option>Chocolate</option>
-    <option>Strawberry</option>
-    <option>Vanilla</option>
-    <option>Flavor of the Week</option>
-  </select>
+    <div class="field">
+      <div class="icon">🥤</div>
+      <select id="shake">
+        <option value="">Select Shake Flavor</option>
+        <option>Chocolate</option>
+        <option>Strawberry</option>
+        <option>Vanilla</option>
+        <option>Flavor of the Week</option>
+      </select>
+    </div>
+    <div class="hint">Chocolate / Strawberry / Vanilla / Flavor of the Week</div>
 
-<button onclick="submitOrder()">Submit Order</button>
+    <button onclick="submitOrder()">➤ SUBMIT ORDER</button>
 
-  <p id="msg"></p>
-</div>
+    <div class="notice">
+      🕘 Orders must be submitted by <strong>7:45 AM</strong><br />
+      One order per student, per day
+    </div>
 
-<script>
-const cutoff = "07:45";
+    <p id="msg"></p>
+  </main>
 
-function submitOrder() {
-  const now = new Date();
-  const cutoffTime = new Date();
-  const [h,m] = cutoff.split(":");
-  cutoffTime.setHours(h,m);
+  <script>
+    const cutoff = "07:45";
 
-  if(now > cutoffTime){
-    document.getElementById("msg").innerText = "Ordering is closed";
-    return;
-  }
+    function getTodayKey() {
+      return new Date().toISOString().split("T")[0];
+    }
 
-  const name = document.getElementById("name").value;
-  const grade = document.getElementById("grade").value;
+    function submitOrder() {
+      const msg = document.getElementById("msg");
 
-  const key = name + grade;
+      const now = new Date();
+      const cutoffTime = new Date();
+      const [h, m] = cutoff.split(":");
+      cutoffTime.setHours(h, m, 0, 0);
 
-  if(localStorage.getItem(key)){
-    document.getElementById("msg").innerText = "Order already submitted today";
-    return;
-  }
+      if (now > cutoffTime) {
+        msg.innerText = "Ordering is closed for today.";
+        return;
+      }
 
-  localStorage.setItem(key, "ordered");
+      const name = document.getElementById("name").value.trim();
+      const grade = document.getElementById("grade").value;
+      const pickup = document.getElementById("pickup").value;
+      const shake = document.getElementById("shake").value;
 
-  document.getElementById("msg").innerText = "Order submitted!";
-}
-</script>
+      if (!name || !grade || !pickup || !shake) {
+        msg.innerText = "Please complete all fields.";
+        return;
+      }
 
+      const key = `${getTodayKey()}-${name.toLowerCase()}-${grade}`;
+
+      if (localStorage.getItem(key)) {
+        msg.innerText = "An order has already been submitted for this student today.";
+        return;
+      }
+
+      const order = {
+        name,
+        grade,
+        pickup,
+        shake,
+        date: getTodayKey(),
+        submittedAt: new Date().toLocaleTimeString()
+      };
+
+      localStorage.setItem(key, JSON.stringify(order));
+
+      document.getElementById("name").value = "";
+      document.getElementById("grade").value = "";
+      document.getElementById("pickup").value = "";
+      document.getElementById("shake").value = "";
+
+      msg.innerText = "Order submitted!";
+    }
+  </script>
 </body>
 </html>
